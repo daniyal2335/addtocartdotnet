@@ -1,0 +1,36 @@
+﻿@model IEnumerable<AddToCart.Models.CartItem>
+
+<h1>Shopping Cart</h1>
+<table class="table">
+    <thead>
+       <tr>
+           <th>Product</th>
+           <th>Quantity</th>
+           <th>Unit Price</th>
+           <th>Total Price</th>
+           <th>Action</th>
+       </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>@item.product.Name</td>
+                    <td>
+                        <form method="post" action="/Cart/UpdateQuantity">
+                            <input type="hidden" name="id" value="@item.productId" />
+                            <button type="submit" name="action" value="decrease" class="btn btn-secondary">-</button>
+                        @item.quantity
+                            <button type="submit" name="action" value="increase" class="btn btn-secondary">+</button>
+                        </form>
+                    </td>
+                    <td>@item.product.Price</td>
+                    <td>@(item.quantity * item.product.Price)</td> <!-- Total Price -->
+                    <td>
+                        <a href="/Cart/RemoveFromCart/@item.productId" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
